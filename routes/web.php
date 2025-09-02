@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('welcome');
-})->name('home');
+Route::get('/', [FrontEndController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
+    Route::get('dashboard', static function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
     Route::get('create-post', [PostController::class, 'create'])->name('posts.create');
