@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Override;
 
 /** @mixin Post */
-class PostResource extends JsonResource
+final class PostResource extends JsonResource
 {
+    #[Override]
     public function toArray(Request $request)
     {
         return [
