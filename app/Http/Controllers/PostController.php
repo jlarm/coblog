@@ -7,17 +7,27 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
+use Inertia\Inertia;
+use Inertia\Response;
 
 final class PostController extends Controller
 {
-    public function index()
+    public function create(): Response
     {
-        return PostResource::collection(Post::all());
+        return Inertia::render('posts/create');
     }
 
-    public function store(PostRequest $request): PostResource
+    public function store(PostRequest $request): RedirectResponse
     {
-        return new PostResource(Post::create($request->validated()));
+        Post::create([
+            ...$request->validated(),
+            'uuid' => Str::uuid(),
+        ]);
+
+        return redirect()->route('dashboard')
+            ->with('success', 'Post created successfully.');
     }
 
     public function show(Post $post): PostResource

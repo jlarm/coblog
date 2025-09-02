@@ -13,10 +13,11 @@ use Override;
 final class PostResource extends JsonResource
 {
     #[Override]
-    public function toArray(Request $request)
+    public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
+            'uuid' => $this->uuid,
             'title' => $this->title,
             'body' => $this->body,
             'created_at' => $this->created_at,
